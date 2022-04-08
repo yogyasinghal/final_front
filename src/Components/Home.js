@@ -74,6 +74,7 @@ export default function Home() {
             shrink: true,
           }}
           variant="standard"
+          value = "0000000"
           onChange={e => setPincode(e.target.value)}
         />
         <Button 

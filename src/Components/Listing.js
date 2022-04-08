@@ -7,6 +7,8 @@ import TextField from '@mui/material/TextField';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
+import {Link} from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 
 const Listing = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -36,12 +38,22 @@ const Listing = () => {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+    
+      <Box sx={{ flexGrow: 1}}>
         <AppBar position="static">
           <Toolbar>
+          <Button></Button>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
               List Your Property Here
             </Typography>
+            <Button 
+              color="inherit"
+              component = {Link}
+              to = "/"
+              size = "medium"
+            >
+            Home
+            </Button>
           </Toolbar>
         </AppBar>
       </Box>
