@@ -15,9 +15,9 @@ function App() {
       {/* <Home/> */}
       <Router>
         <Routes>
-          <Route path = '/' element = {<Home/>}/>
-          <Route path = '/home' element = {<Home/>}/>
-          <Route path = '/nav' element = {
+          {/* <Route path = '/' element = {<Home/>}/> */}
+          {/* <Route path = '/home' element = {<Home/>}/> */}
+          <Route path = '/' element = {
               <>
               <Navbar/>
               <Home/>
