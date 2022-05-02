@@ -18,6 +18,8 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 
 import { makeStyles } from '@mui/styles';
 
+import ShowProperty from './ShowProperty';
+
 
 const useStyles = makeStyles({
     cardstyle:{
@@ -33,16 +35,21 @@ submit: {
 export default function Home() {
     const classes = useStyles();
     const [pincode,setPincode] = useState(0);
+    const [showFlag,setFlag] = useState(false)
 
     async function submitValue(event){
         event.preventDefault();
+        setFlag(true);
         console.log(pincode);
+        // <ShowProperty/>
+        // console.log("end of submit ");
     }
 
 
 
   return (
     //   <h1>pincode</h1>
+    <>
     <Card className={classes.cardstyle}  sx={{ maxWidth: 345 }}>
       <CardActionArea  >
         <CardMedia
@@ -87,5 +94,10 @@ export default function Home() {
         </Button>
       </CardActions>
     </Card>
+    { showFlag && <ShowProperty pincode = {pincode}/>}
+    </>
   );
 }
+
+// to make property show only on submit button make a seperate function
+// for input field and then set flag = false in that function
