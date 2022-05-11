@@ -67,7 +67,7 @@ export default function Home() {
             Properties
           </Typography>
           <Typography variant="body2" color="text.secondary">
-          Everyone Deserves the Opportunity of Home
+          Everyone Deserves the Opportunity of Home 
           </Typography>
          
         </CardContent>

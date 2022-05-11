@@ -38,7 +38,7 @@ export default function ShowProperty(pincode) {
             <Carousel className={classes.image}>
                 <div>
                     <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
-                    <p className="legend">Legend 10</p>
+                    <p className="legend">Legend 1</p>
                 </div>
                 <div>
                     <img src="https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c" />
