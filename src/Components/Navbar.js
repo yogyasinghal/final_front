@@ -6,9 +6,29 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-export default function ButtonAppBar() {
+
+// import Head from "next/head";
+// import Image from "next/image";
+// import styles from "../styles/Home.module.css";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+
+
+export default function ButtonAppBar(props) {
+
+ 
+
+  useEffect(() => {
+    if (typeof window.ethereum !== "undefined") {
+      props.setHasMetamask(true);
+    }
+  });
+
+
+  
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -20,21 +40,42 @@ export default function ButtonAppBar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
+
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Home 
+            Home
           </Typography>
-            <Button 
-              color="inherit"
-              component = {Link}
-              to = "/listing"
-              size = "medium"
-            >
+          <Button
+            color="inherit"
+            component={Link}
+            to="/listing"
+            size="medium"
+          >
             Listing
+          </Button>
+          {/* <Button
+            color="inherit"
+            onClick={()=>{connect()}}
+            size="medium"
             </Button>
+          > */}
+          <div>
+            {props.hasMetamask ? (
+              props.isConnected ? (
+                "Connected! "
+              ) : (
+                <button onClick={() => props.connect()}>Connect</button>
+              )
+            ) : (
+              "Please install metamask"
+            )}
+          </div>
+          
+
         </Toolbar>
+
       </AppBar>
-    </Box>
+    </Box >
   );
 }

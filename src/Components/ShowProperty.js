@@ -1,25 +1,94 @@
 import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import axios from 'axios';
 
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles({
-    image:{
-    marginTop: '3vh',
-    margin:'auto',
-    // flexDirection: 'column',
-    width:'40vw'
-},
-submit: {
-    marginLeft: '2vw',
-  },
+    image: {
+        marginTop: '3vh',
+        margin: 'auto',
+        // flexDirection: 'column',
+        width: '40vw'
+    },
+    submit: {
+        marginLeft: '2vw',
+    },
 });
 
-export default function ShowProperty(pincode) {
-    const classes = useStyles();    
-    return(
+export default function ShowProperty(props) {
+    const classes = useStyles();
+    const [images, setImages] = useState([]);
+    //let images = [];
+    //const [imagesLoaded, setImageLoaded] = useState(false);
+    //const [images, setImages] = useState([]);
+    let images1 = [[
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg"
+    ], [
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg"
+    ], [
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
+        "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg"
+    ]];
+
+    async function loadImages() {
+        //let ar=[]
+        props.properties.map((pr1) => (axios.get(`/getimages/${pr1}`)
+            .then(res => {
+                //console.log("res.data cart = ", res);
+                //console.log(res.data[0]);
+                //ar=[res.data, ...ar]
+                //console.log(JSON.parse(res.data))
+                //images.push(res.data);
+                // setImages(res);
+                setImages([res.data, ...images]);
+                //images = [res.data, ...images];
+                //console.log("final ar", ar)
+                //return ar
+            })
+            .catch(res => {
+                console.log("error res = ", res);
+            })));
+        //setImages([...ar])
+    };
+
+    // async function fun1() {
+    //     //console.log("1646464464",await loadImages());
+    //     await loadImages()
+    //     console.log("myimages", images)
+    //     setImageLoaded(true);
+    // };
+    //fun1();
+
+    loadImages()
+    console.log("--------------->Final OutPut:  ", images);
+
+    return (
+
         <>
+
+            <div>
+                {images.length > 0 ?
+                    images.map((imgArr) => (
+                        <Carousel className={classes.image}>
+                            {imgArr.map((singleImage) => (
+                                <div>
+                                    <img src={singleImage} />
+                                    <p className="legend">imgArr</p>
+                                </div>
+                            ))}
+                        </Carousel>
+                    )) : ""
+                }
+            </div>
+
             <Carousel className={classes.image}>
                 <div>
                     <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
@@ -31,7 +100,7 @@ export default function ShowProperty(pincode) {
                 </div>
                 <div>
                     {/* <img src="assets/3.jpeg" /> */}
-                    <img src = "https://images.unsplash.com/photo-1551782450-a2132b4ba21d"/>
+                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
                     <p className="legend">Legend 3</p>
                 </div>
             </Carousel>
@@ -46,12 +115,12 @@ export default function ShowProperty(pincode) {
                 </div>
                 <div>
                     {/* <img src="assets/3.jpeg" /> */}
-                    <img src = "https://images.unsplash.com/photo-1551782450-a2132b4ba21d"/>
+                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
                     <p className="legend">Legend 3</p>
                 </div>
             </Carousel>
         </>
-        );
+    );
 }
 // });
 
