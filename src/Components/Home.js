@@ -103,7 +103,7 @@ export default function Home(props) {
       </Card>
       {/* {console.log(props.properties)} */}
       {/* {console.log("properties in Home",props.properties)} */}
-      {buttonClick ? props.properties.length > 0 ? <ShowProperty properties={props.properties} /> : "Sorry No properties are present at given address." : ""}
+      {buttonClick ? props.properties.length > 0 ? <ShowProperty properties={props.properties} abi={props.abi} contractAddress={props.contractAddress} signer={props.signer}/> : "Sorry No properties are present at given address." : ""}
     </>
   );
 }

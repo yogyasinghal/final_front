@@ -16,7 +16,7 @@ function App() {
   const [hasMetamask, setHasMetamask] = useState(false);
   const [signer, setSigner] = useState(undefined);
   const [properties, setProperties] = useState([]);
-
+  //const [price,setPrice]=useState([]);
   const contractAddress = "0x253e0ee2a970af680988b97a5d79c500001b7097";
 
   const abi = [
@@ -165,6 +165,11 @@ function App() {
         //const properties = await contract.search(pincode);
         setProperties(await contract.search(pincode));
         //setProperties(['ab','cd','ef']);
+        //properties.map((singleProperty)=>{
+          //let temp= contract.price(singleProperty)
+          //setPrice([...price,temp])
+        //})
+        //console.log("Prices in App.js",price)
         console.log("Properties in App.js", properties)
 
       } catch (error) {
@@ -189,7 +194,7 @@ function App() {
           <Route path='/' element={
             <>
               <Navbar isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} />
-              <Home isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} execute={execute} abi={abi} contractAddress={contractAddress} properties={properties} />
+              <Home isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} execute={execute} abi={abi} contractAddress={contractAddress} properties={properties} signer={signer}/>
             </>
           } />
           <Route path='/listing' element={<Listing />} />

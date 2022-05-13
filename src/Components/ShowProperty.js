@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 import axios from 'axios';
+import { ethers } from "ethers";
 
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles({
@@ -18,11 +19,14 @@ const useStyles = makeStyles({
     },
 });
 
+
+
 export default function ShowProperty(props) {
     const classes = useStyles();
+    let price = []
     const [images, setImages] = useState([]);
     //let images = [];
-    //const [imagesLoaded, setImageLoaded] = useState(false);
+    const [imagesLoaded, setImageLoaded] = useState(false);
     //const [images, setImages] = useState([]);
     let images1 = [[
         "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg",
@@ -38,17 +42,56 @@ export default function ShowProperty(props) {
         "https://dp5zphk8udxg9.cloudfront.net/wp-content/uploads/2017/07/shutterstock_198883310-e1499838393321.jpg"
     ]];
 
-    async function loadImages() {
+    async function execute() {
+        if (typeof window.ethereum !== "undefined") {
+
+
+            const contract = new ethers.Contract(props.contractAddress, props.abi, props.signer);
+            try {
+                //const properties = await contract.search(pincode);
+                for (let i = 0; i < props.properties.length; i++) {
+                    console.log("###########", props.properties[i])
+                    let temp = await contract.homeaddtoprice(props.properties[i]);
+                    price.push(parseInt(temp._hex, 16))
+                    //console.log("@@@@@@@@@@@@@@",price)
+                }
+
+                //setProperties(['ab','cd','ef']);
+                //properties.map((singleProperty)=>{
+                //let temp= contract.price(singleProperty)
+                //setPrice([...price,temp])
+                //})
+                //console.log("Prices in App.js",price)
+                //console.log("Properties in App.js", props.properties)
+                console.log("price in App.js", price)
+
+            } catch (error) {
+
+                console.log(error);
+                //console.log(contractAddress)
+                //console.log(signer)
+            }
+        } else {
+            console.log("Please install MetaMask");
+        }
+    };
+
+     function loadImages() {
         //let ar=[]
+        //setImages([])
+        let a = 1
         props.properties.map((pr1) => (axios.get(`/getimages/${pr1}`)
             .then(res => {
                 //console.log("res.data cart = ", res);
-                //console.log(res.data[0]);
+                console.log(pr1)
+                console.log("res.data", a);
+                a += 1
                 //ar=[res.data, ...ar]
-                //console.log(JSON.parse(res.data))
-                //images.push(res.data);
+                console.log(res.data)
+                images.push(res.data);
                 // setImages(res);
-                setImages([res.data, ...images]);
+                //setImages([res.data, ...images]);
+
                 //images = [res.data, ...images];
                 //console.log("final ar", ar)
                 //return ar
@@ -56,6 +99,7 @@ export default function ShowProperty(props) {
             .catch(res => {
                 console.log("error res = ", res);
             })));
+            setImageLoaded(true)
         //setImages([...ar])
     };
 
@@ -63,19 +107,22 @@ export default function ShowProperty(props) {
     //     //console.log("1646464464",await loadImages());
     //     await loadImages()
     //     console.log("myimages", images)
-    //     setImageLoaded(true);
+    //     //setImageLoaded(true);
     // };
     //fun1();
-
-    loadImages()
+    //execute()
+    //loadImages()
+    useEffect(() => { loadImages() }, [])
+    console.log("imagesLoaded",imagesLoaded)
     console.log("--------------->Final OutPut:  ", images);
-
-    return (
+    console.log("price in showproperties", price)
+    setTimeout(()=>
+    {return (
 
         <>
 
             <div>
-                {images.length > 0 ?
+                {imagesLoaded ?
                     images.map((imgArr) => (
                         <Carousel className={classes.image}>
                             {imgArr.map((singleImage) => (
@@ -120,7 +167,8 @@ export default function ShowProperty(props) {
                 </div>
             </Carousel>
         </>
-    );
+    )}
+    ,5000);
 }
 // });
 
