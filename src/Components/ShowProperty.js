@@ -89,9 +89,12 @@ export default function ShowProperty(props) {
                 //ar=[res.data, ...ar]
                 console.log(res.data)
                 images.push(res.data);
+                if((props.properties[props.properties.length-1]==pr1)&&(images.length==props.properties.length)){
+                    setImageLoaded(true)
+                }
                 // setImages(res);
                 //setImages([res.data, ...images]);
-
+                
                 //images = [res.data, ...images];
                 //console.log("final ar", ar)
                 //return ar
@@ -99,7 +102,8 @@ export default function ShowProperty(props) {
             .catch(res => {
                 console.log("error res = ", res);
             })));
-            setImageLoaded(true)
+            //setImageLoaded(true)
+            //setImageLoaded(a=>!a)
         //setImages([...ar])
     };
 
@@ -116,8 +120,7 @@ export default function ShowProperty(props) {
     console.log("imagesLoaded",imagesLoaded)
     console.log("--------------->Final OutPut:  ", images);
     console.log("price in showproperties", price)
-    setTimeout(()=>
-    {return (
+    return (
 
         <>
 
@@ -167,8 +170,7 @@ export default function ShowProperty(props) {
                 </div>
             </Carousel>
         </>
-    )}
-    ,5000);
+    )
 }
 // });
 
