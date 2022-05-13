@@ -9,8 +9,10 @@ import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import {Link} from 'react-router-dom';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
+import { ethers } from "ethers";
 
-const Listing = () => {
+const Listing = (props) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
 
@@ -36,24 +38,76 @@ const Listing = () => {
     }
   }, [selectedImage]);
 
+  function upload(){
+    let data = {
+      "pname":"",
+      "imageurl":[]
+    };
+    data.pname=name
+    data.imageurl=[selectedImage]
+    // console.log("data = ",data);
+    const config = {     
+      headers: { 'content-type': 'multipart/form-data' }
+    }
+    console.log(data)
+    axios.post(`/storeimageurl`,data)
+    .then(res=>{
+      console.log("post successfull");
+    })
+    .catch(err=>{
+      alert('Fail to post');
+      console.log(err);
+    })
+  }
+
+  async function execute() {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer=provider.getSigner()
+    if (typeof window.ethereum !== "undefined") {
+      const contract = new ethers.Contract(props.contractAddress, props.abi, signer);
+      try {
+        //const properties = await contract.search(pincode);
+        await contract.list(name.toString(),pincode.toString(),price.toString())
+        //setProperties(['ab','cd','ef']);
+        //properties.map((singleProperty)=>{
+          //let temp= contract.price(singleProperty)
+          //setPrice([...price,temp])
+        //})
+        //console.log("Prices in App.js",price)
+        //console.log("Properties in App.js", properties)
+
+      } catch (error) {
+
+        console.log(error);
+        //console.log(contractAddress)
+        //console.log(signer)
+      }
+    } else {
+      console.log("Please install MetaMask");
+    }
+  };
+
   return (
     <>
     
       <Box sx={{ flexGrow: 1}}>
         <AppBar position="static">
           <Toolbar>
-          <Button></Button>
+          <Button color="inherit"
+              component = {Link}
+              to = "/"
+              size = "medium"> Home </Button>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
               List Your Property Here
             </Typography>
-            <Button 
+            {/* <Button 
               color="inherit"
               component = {Link}
               to = "/"
               size = "medium"
             >
             Home
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
       </Box>
@@ -112,7 +166,7 @@ const Listing = () => {
 
     <br/>
     <br/>
-    <Button variant="contained" color="success">
+    <Button variant="contained" color="success" onClick={()=>execute()}>
     Submit
     </Button>
     </>

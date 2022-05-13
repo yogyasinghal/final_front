@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 // import Head from "next/head";
@@ -17,8 +18,33 @@ import { useEffect, useState } from "react";
 
 
 export default function ButtonAppBar(props) {
+  const navigate = useNavigate();
+  let prope = ""
+  async function execute() {
 
- 
+    if (typeof window.ethereum !== "undefined") {
+
+
+      const contract = new ethers.Contract(props.contractAddress, props.abi, props.signer);
+      try {
+        prope = (await contract.escrowadd());
+        console.log(prope)
+        if (prope == "") {
+          alert("No Pending Transactions")
+        }
+        else {
+          console.log("prope")
+          navigate("/transaction")
+        };
+      }
+      catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Please install MetaMask");
+    }
+  };
+
 
   useEffect(() => {
     if (typeof window.ethereum !== "undefined") {
@@ -27,13 +53,13 @@ export default function ButtonAppBar(props) {
   });
 
 
-  
+
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -42,8 +68,8 @@ export default function ButtonAppBar(props) {
           >
 
             <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          </IconButton> */}
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} edge="start" sx={{ mr: 2 }}>
             Home
           </Typography>
           <Button
@@ -53,6 +79,15 @@ export default function ButtonAppBar(props) {
             size="medium"
           >
             Listing
+          </Button>
+          <Button
+            color="inherit"
+            // component={Link}
+            // to="/listing"
+            size="medium"
+            onClick={() => execute()}
+          >
+            Pending Transactions
           </Button>
           {/* <Button
             color="inherit"
@@ -71,7 +106,7 @@ export default function ButtonAppBar(props) {
               "Please install metamask"
             )}
           </div>
-          
+
 
         </Toolbar>
 

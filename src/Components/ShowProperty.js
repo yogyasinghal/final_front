@@ -5,6 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from 'react-responsive-carousel';
 import axios from 'axios';
 import { ethers } from "ethers";
+import Button from '@mui/material/Button';
 
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles({
@@ -22,8 +23,10 @@ const useStyles = makeStyles({
 
 
 export default function ShowProperty(props) {
+    let count = 0
     const classes = useStyles();
-    let price = []
+    //let price = []
+    const [price, setPrice] = useState([]);
     const [images, setImages] = useState([]);
     //let images = [];
     const [imagesLoaded, setImageLoaded] = useState(false);
@@ -54,6 +57,9 @@ export default function ShowProperty(props) {
                     let temp = await contract.homeaddtoprice(props.properties[i]);
                     price.push(parseInt(temp._hex, 16))
                     //console.log("@@@@@@@@@@@@@@",price)
+                    if ((images.length == props.properties.length) && (price.length == props.properties.length)) {
+                        setImageLoaded(true)
+                    }
                 }
 
                 //setProperties(['ab','cd','ef']);
@@ -63,7 +69,7 @@ export default function ShowProperty(props) {
                 //})
                 //console.log("Prices in App.js",price)
                 //console.log("Properties in App.js", props.properties)
-                console.log("price in App.js", price)
+                console.log("price in", price)
 
             } catch (error) {
 
@@ -76,7 +82,25 @@ export default function ShowProperty(props) {
         }
     };
 
-     function loadImages() {
+    async function buyProperty(address, cost) {
+        if (typeof window.ethereum !== "undefined") {
+            const contract = new ethers.Contract(props.contractAddress, props.abi, props.signer);
+            try {
+                console.log("biawugfucavu",address,cost)
+                const arr1 = await contract.createescrow(address, { value: ethers.utils.parseUnits(cost, "ether") });
+                console.log("hash id",arr1)
+                //console.log(signer)
+            } catch (error) {
+                console.log("buy property error",error);
+                //console.log(contractAddress)
+                //console.log(signer)
+            }
+        } else {
+            console.log("Please install MetaMask");
+        }
+    }
+
+    function loadImages() {
         //let ar=[]
         //setImages([])
         let a = 1
@@ -87,14 +111,15 @@ export default function ShowProperty(props) {
                 console.log("res.data", a);
                 a += 1
                 //ar=[res.data, ...ar]
-                console.log(res.data)
+                console.log("ffffffffffffff",res.data)
                 images.push(res.data);
-                if((props.properties[props.properties.length-1]==pr1)&&(images.length==props.properties.length)){
-                    setImageLoaded(true)
+                if ((props.properties[props.properties.length - 1] == pr1) && (images.length == props.properties.length)) {
+                    //setImageLoaded(true)
+                    execute();
                 }
                 // setImages(res);
                 //setImages([res.data, ...images]);
-                
+
                 //images = [res.data, ...images];
                 //console.log("final ar", ar)
                 //return ar
@@ -102,8 +127,8 @@ export default function ShowProperty(props) {
             .catch(res => {
                 console.log("error res = ", res);
             })));
-            //setImageLoaded(true)
-            //setImageLoaded(a=>!a)
+        //setImageLoaded(true)
+        //setImageLoaded(a=>!a)
         //setImages([...ar])
     };
 
@@ -114,10 +139,10 @@ export default function ShowProperty(props) {
     //     //setImageLoaded(true);
     // };
     //fun1();
-    //execute()
+
     //loadImages()
     useEffect(() => { loadImages() }, [])
-    console.log("imagesLoaded",imagesLoaded)
+    console.log("imagesLoaded", imagesLoaded)
     console.log("--------------->Final OutPut:  ", images);
     console.log("price in showproperties", price)
     return (
@@ -127,48 +152,23 @@ export default function ShowProperty(props) {
             <div>
                 {imagesLoaded ?
                     images.map((imgArr) => (
-                        <Carousel className={classes.image}>
-                            {imgArr.map((singleImage) => (
-                                <div>
-                                    <img src={singleImage} />
-                                    <p className="legend">imgArr</p>
-                                </div>
-                            ))}
-                        </Carousel>
+                        <>
+                            <Carousel className={classes.image}>
+                                {imgArr.map((singleImage) => (
+                                    <div>
+                                        <img src={singleImage} />
+                                        <p className="legend">imgArr</p>
+                                    </div>
+                                ))}
+                            </Carousel>
+                            <h2>{count = count + 1}: {props.properties[count - 1]} </h2>
+                            <h2>price in eth: {price[count - 1]}</h2>
+                            <Button variant="contained" color="success" onClick={() => {console.log("hfifiawigiawi9999999",props.properties[count - 1], price[count - 1]);buyProperty(props.properties[count - 1], price[count - 1].toString())}}>
+                                BUY
+                            </Button></>
                     )) : ""
                 }
             </div>
-
-            <Carousel className={classes.image}>
-                <div>
-                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
-                    <p className="legend">Legend 10</p>
-                </div>
-                <div>
-                    <img src="https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c" />
-                    <p className="legend">Legend 2</p>
-                </div>
-                <div>
-                    {/* <img src="assets/3.jpeg" /> */}
-                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
-                    <p className="legend">Legend 3</p>
-                </div>
-            </Carousel>
-            <Carousel className={classes.image}>
-                <div>
-                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
-                    <p className="legend">Legend 1</p>
-                </div>
-                <div>
-                    <img src="https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c" />
-                    <p className="legend">Legend 2</p>
-                </div>
-                <div>
-                    {/* <img src="assets/3.jpeg" /> */}
-                    <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d" />
-                    <p className="legend">Legend 3</p>
-                </div>
-            </Carousel>
         </>
     )
 }
