@@ -18,7 +18,7 @@ function App() {
   const [signer, setSigner] = useState(undefined);
   const [properties, setProperties] = useState([]);
   //const [price,setPrice]=useState([]);
-  const contractAddress = "0xE3901c3429e6496bFd62Edf12265EB670970f9a2";
+  const contractAddress = "0x2779755f817ae9Bb5Bf24DD7768857BDba509D0c";
 
   const abi = [
     {

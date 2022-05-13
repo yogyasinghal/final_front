@@ -67,7 +67,7 @@ const Listing = (props) => {
       const contract = new ethers.Contract(props.contractAddress, props.abi, signer);
       try {
         //const properties = await contract.search(pincode);
-        await contract.list(name.toString(),pincode.toString(),price.toString())
+        await contract.list(name,pincode.toString(),price.toString())
         //setProperties(['ab','cd','ef']);
         //properties.map((singleProperty)=>{
           //let temp= contract.price(singleProperty)
