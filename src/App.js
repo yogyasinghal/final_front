@@ -211,15 +211,25 @@ function App() {
         <Routes>
           {/* <Route path = '/' element = {<Home/>}/> */}
           {/* <Route path = '/home' element = {<Home/>}/> */}
-          <Route path='/' element={
+          <Route path='' element={
             <>
               <Navbar isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} abi={abi} contractAddress={contractAddress} signer={signer} />
               <Home isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} execute={execute} abi={abi} contractAddress={contractAddress} properties={properties} signer={signer} />
               {/* <Transaction  abi={abi} contractAddress={contractAddress} signer={signer}  /> */}
             </>
           } />
-          <Route path='/listing' element={<Listing abi={abi} contractAddress={contractAddress} signer={signer} />} />
-          <Route path='/transaction' element={<Transaction abi={abi} contractAddress={contractAddress} signer={signer} />} />
+          <Route path='/listing' element={
+            <>
+            <Navbar isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} abi={abi} contractAddress={contractAddress} signer={signer} />
+            <Listing abi={abi} contractAddress={contractAddress} signer={signer} />
+            </>} />
+          <Route path='/transaction' element={
+            <>
+            <Navbar isConnected={isConnected} hasMetamask={hasMetamask} setIsConnected={setIsConnected} setHasMetamask={setHasMetamask} connect={connect} abi={abi} contractAddress={contractAddress} signer={signer} />
+            <Transaction abi={abi} contractAddress={contractAddress} signer={signer} />
+            </>
+            } />
+          
         </Routes>
       </Router>
       {/* <header className="App-header">

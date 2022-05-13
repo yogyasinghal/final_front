@@ -90,30 +90,7 @@ const Listing = (props) => {
   return (
     <>
     
-      <Box sx={{ flexGrow: 1}}>
-        <AppBar position="static">
-          <Toolbar>
-          <Button color="inherit"
-              component = {Link}
-              to = "/"
-              size = "medium"> Home </Button>
-            <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
-              List Your Property Here
-            </Typography>
-            {/* <Button 
-              color="inherit"
-              component = {Link}
-              to = "/"
-              size = "medium"
-            >
-            Home
-            </Button> */}
-          </Toolbar>
-        </AppBar>
-      </Box>
-
-      <br />
-
+      
       <Box
         component="form"
         sx={{

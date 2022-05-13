@@ -157,7 +157,7 @@ export default function ShowProperty(props) {
                                 {imgArr.map((singleImage) => (
                                     <div>
                                         <img src={singleImage} />
-                                        <p className="legend">imgArr</p>
+                                        {/* <p className="legend">imgArr</p> */}
                                     </div>
                                 ))}
                             </Carousel>

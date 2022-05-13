@@ -69,9 +69,17 @@ export default function ButtonAppBar(props) {
 
             <MenuIcon />
           </IconButton> */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} edge="start" sx={{ mr: 2 }}>
+          {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} edge="start" sx={{ mr: 2 }}>
             Home
-          </Typography>
+          </Typography> */}
+          <Button
+            color="inherit"
+            component={Link}
+            to="/"
+            size="medium"
+          >
+            Home
+          </Button>
           <Button
             color="inherit"
             component={Link}

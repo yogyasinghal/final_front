@@ -95,7 +95,7 @@ export default function Transaction(props) {
         if (typeof window.ethereum !== "undefined") {
             const contract = new ethers.Contract(props.contractAddress, props.abi, props.signer);
             try {
-                await contract.finaltransaction()
+                await contract.finaltransaction(prope)
             } catch (error) {
                 console.log(error);
             }
@@ -122,13 +122,13 @@ export default function Transaction(props) {
                                 {imgArr.map((singleImage) => (
                                     <div>
                                         <img src={singleImage} />
-                                        <p className="legend">imgArr</p>
+                                        {/* <p className="legend">imgArr</p> */}
                                     </div>
                                 ))}
                             </Carousel>
                             <h2> {prope} </h2>
-                            <Button variant="contained" color="success" >
-                                Complete
+                            <Button variant="contained" color="success" onClick={() => {final()}}>
+                                Complete Transaction
                             </Button></>
                     )) : ""
                 }
