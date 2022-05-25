@@ -104,7 +104,7 @@ export default function ShowProperty(props) {
         //let ar=[]
         //setImages([])
         let a = 1
-        props.properties.map((pr1) => (axios.get(`/getimages/${pr1}`)
+        props.properties.map((pr1) => (axios.get(`http://localhost:4000/api/getimages/${pr1}`)
             .then(res => {
                 //console.log("res.data cart = ", res);
                 console.log(pr1)

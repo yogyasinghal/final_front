@@ -60,6 +60,30 @@ const Listing = (props) => {
     })
   }
 
+
+  const submit = (e)=>{
+    console.log("submit clicked");
+    console.log(selectedImage);
+    let data = new FormData();
+    data.append("name",name);
+    data.append("description",pincode);
+    data.append("price",price);
+    data.append("file",selectedImage);
+    const config = {     
+      headers: { 'content-type': 'multipart/form-data' }
+    }
+    console.log(data);
+   axios.post(`http://localhost:4000/api/storeimageurl1`,data,config)
+   .then(res=>{
+     console.log("post successfull");
+   })
+   .catch(err=>{
+     console.log("post unsuccessfull");
+     console.log(err);
+   })
+  }
+
+
   async function execute() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     let signer=provider.getSigner()
@@ -143,7 +167,7 @@ const Listing = (props) => {
 
     <br/>
     <br/>
-    <Button variant="contained" color="success" onClick={()=>execute()}>
+    <Button variant="contained" color="success" onClick={()=>{submit()}}>
     Submit
     </Button>
     </>
