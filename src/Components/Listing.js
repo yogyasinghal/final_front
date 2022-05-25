@@ -154,7 +154,7 @@ const Listing = (props) => {
       />
       <label htmlFor="select-image">
         <Button variant="contained" color="primary" component="span">
-          Upload Image
+          Select Image
         </Button>
       </label>
       {imageUrl && selectedImage && (
@@ -167,9 +167,14 @@ const Listing = (props) => {
 
     <br/>
     <br/>
-    <Button variant="contained" color="success" onClick={()=>{submit()}}>
+    
+    <Button variant="contained" color="success" style={{ margin: 10}} onClick={()=>{submit()}}>
+    Upload
+    </Button>
+    <Button variant="contained" color="success" style={{ margin: 10}} onClick={()=>{execute()}}>
     Submit
     </Button>
+    
     </>
   );
 };
