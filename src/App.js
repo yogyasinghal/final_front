@@ -186,7 +186,7 @@ function App() {
         //setPrice([...price,temp])
         //})
         //console.log("Prices in App.js",price)
-        console.log("Properties in App.js", properties)
+        // console.log("Properties in App.js", properties)
         for(let i=0;i<prope.length;i++){
           if(prope[i]!=""){
             proper.push(prope[i])
